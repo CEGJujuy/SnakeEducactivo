@@ -140,6 +140,12 @@ function gameLoop() {
 function update() {
     if (gameState !== 'playing') return;
     
+    // Check if snake is empty (game over condition)
+    if (snake.length === 0) {
+        gameOver();
+        return;
+    }
+    
     // Actualizar dirección
     direction = { ...nextDirection };
     
