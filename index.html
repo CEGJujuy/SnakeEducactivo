@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Educativo</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P:wght@400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Pantalla de inicio -->
+        <div id="start-screen" class="screen active">
+            <div class="title-container">
+                <h1 class="game-title">🐍 SNAKE EDUCATIVO</h1>
+                <p class="subtitle">¡Aprende mientras juegas!</p>
+            </div>
+            
+            <div class="level-selection">
+                <h3>Selecciona tu nivel:</h3>
+                <div class="level-buttons">
+                    <button class="level-btn" data-level="1">
+                        <span class="level-number">1</span>
+                        <span class="level-name">Principiante</span>
+                        <span class="level-desc">6-8 años</span>
+                    </button>
+                    <button class="level-btn" data-level="2">
+                        <span class="level-number">2</span>
+                        <span class="level-name">Intermedio</span>
+                        <span class="level-desc">9-12 años</span>
+                    </button>
+                    <button class="level-btn" data-level="3">
+                        <span class="level-number">3</span>
+                        <span class="level-name">Avanzado</span>
+                        <span class="level-desc">13+ años</span>
+                    </button>
+                </div>
+            </div>
+            
+            <button id="start-game" class="start-btn">COMENZAR JUEGO</button>
+        </div>
+
+        <!-- Pantalla de juego -->
+        <div id="game-screen" class="screen">
+            <div class="game-header">
+                <div class="score-info">
+                    <span class="score">Puntos: <span id="score">0</span></span>
+                    <span class="level">Nivel: <span id="current-level">1</span></span>
+                    <span class="time">Tiempo: <span id="time">00:00</span></span>
+                </div>
+            </div>
+
+            <canvas id="game-canvas" width="400" height="400"></canvas>
+
+            <!-- Controles táctiles -->
+            <div class="touch-controls">
+                <div class="control-row">
+                    <button class="control-btn" data-direction="up">↑</button>
+                </div>
+                <div class="control-row">
+                    <button class="control-btn" data-direction="left">←</button>
+                    <button class="control-btn" data-direction="down">↓</button>
+                    <button class="control-btn" data-direction="right">→</button>
+                </div>
+            </div>
+
+            <button id="pause-btn" class="pause-btn">⏸️ PAUSA</button>
+        </div>
+
+        <!-- Modal de pregunta -->
+        <div id="question-modal" class="modal">
+            <div class="modal-content">
+                <div class="question-header">
+                    <span class="category" id="question-category"></span>
+                    <span class="question-number">Pregunta <span id="question-num">1</span></span>
+                </div>
+                <h3 id="question-text"></h3>
+                <div class="answers" id="answers-container"></div>
+                <div class="question-timer">
+                    <div class="timer-bar" id="timer-bar"></div>
+                    <span id="timer-text">10s</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pantalla de estadísticas -->
+        <div id="stats-screen" class="screen">
+            <div class="stats-container">
+                <h2>🏆 ESTADÍSTICAS FINALES</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-value" id="final-score">0</span>
+                        <span class="stat-label">Puntos Totales</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="correct-answers">0</span>
+                        <span class="stat-label">Respuestas Correctas</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="wrong-answers">0</span>
+                        <span class="stat-label">Respuestas Incorrectas</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="total-time">00:00</span>
+                        <span class="stat-label">Tiempo Total</span>
+                    </div>
+                </div>
+
+                <div class="accuracy-container">
+                    <div class="accuracy-circle">
+                        <span class="accuracy-percentage" id="accuracy">0%</span>
+                        <span class="accuracy-label">Precisión</span>
+                    </div>
+                </div>
+
+                <div class="stats-buttons">
+                    <button id="play-again" class="stats-btn primary">🔄 JUGAR DE NUEVO</button>
+                    <button id="back-to-menu" class="stats-btn secondary">🏠 MENÚ PRINCIPAL</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pantalla de pausa -->
+        <div id="pause-screen" class="screen">
+            <div class="pause-container">
+                <h2>⏸️ JUEGO PAUSADO</h2>
+                <div class="pause-buttons">
+                    <button id="resume-btn" class="pause-btn-action primary">▶️ CONTINUAR</button>
+                    <button id="restart-btn" class="pause-btn-action secondary">🔄 REINICIAR</button>
+                    <button id="menu-btn" class="pause-btn-action secondary">🏠 MENÚ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="questions.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
