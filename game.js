@@ -288,13 +288,14 @@ function selectAnswer(selectedIndex) {
     
     currentQuestionIndex++;
     
-    // Cerrar modal después de 2 segundos
+    // Cerrar modal después de 1.5 segundos y continuar el juego
     setTimeout(() => {
         document.getElementById('question-modal').classList.remove('active');
         generateFood();
         gameState = 'playing';
         updateGameUI();
-    }, 2000);
+        gameLoop(); // Reanudar el loop del juego
+    }, 1500);
 }
 
 function startQuestionTimer() {
