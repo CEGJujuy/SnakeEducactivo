@@ -143,6 +143,11 @@ function update() {
     // Actualizar dirección
     direction = { ...nextDirection };
     
+    // Defensive check to ensure direction is properly initialized
+    if (!direction || typeof direction.x === 'undefined' || typeof direction.y === 'undefined') {
+        direction = { x: 0, y: 0 };
+    }
+    
     // Mover serpiente solo si hay dirección
     if (direction.x !== 0 || direction.y !== 0) {
         const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
