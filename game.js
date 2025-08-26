@@ -27,6 +27,7 @@ let questionTimeLeft = 10;
 let correctAnswers = 0;
 let wrongAnswers = 0;
 let totalQuestions = 0;
+let consecutiveWrongAnswers = 0;
 
 // Inicialización del juego
 document.addEventListener('DOMContentLoaded', function() {
@@ -101,6 +102,7 @@ function startGame() {
     correctAnswers = 0;
     wrongAnswers = 0;
     totalQuestions = 0;
+    consecutiveWrongAnswers = 0;
     currentQuestionIndex = 0;
     
     // Obtener preguntas para el nivel seleccionado
@@ -140,22 +142,11 @@ function gameLoop() {
 function update() {
     if (gameState !== 'playing') return;
     
-    // Check if snake is empty (game over condition)
-    if (snake.length === 0) {
-        gameOver();
-        return;
-    }
-    
-    // Actualizar dirección
-    direction = { ...nextDirection };
-    
-    // Defensive check to ensure direction is properly initialized
-    if (!direction || typeof direction.x === 'undefined' || typeof direction.y === 'undefined') {
-        direction = { x: 0, y: 0 };
-    }
-    
     // Mover serpiente solo si hay dirección
-    if (direction.x !== 0 || direction.y !== 0) {
+    if (nextDirection.x !== 0 || nextDirection.y !== 0) {
+        // Actualizar dirección
+        direction = { ...nextDirection };
+        
         const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
         
         // Verificar colisiones con paredes
@@ -286,14 +277,28 @@ function selectAnswer(selectedIndex) {
     // Procesar respuesta
     if (selectedIndex === correctIndex) {
         correctAnswers++;
+        consecutiveWrongAnswers = 0; // Resetear contador de respuestas incorrectas consecutivas
         score += 10 * currentLevel;
         // La serpiente crece (no quitar el último segmento)
     } else {
         wrongAnswers++;
+        consecutiveWrongAnswers++;
+        
+        // Verificar si perdió por 3 respuestas incorrectas consecutivas
+        if (consecutiveWrongAnswers >= 3) {
+            setTimeout(() => {
+                document.getElementById('question-modal').classList.remove('active');
+                gameOver();
+            }, 1500);
+            return;
+        }
+        
         // Reducir serpiente si es incorrecta
         if (snake.length > 1) {
             snake.pop();
-            snake.pop(); // Quitar dos segmentos
+            if (snake.length > 1) {
+                snake.pop(); // Quitar dos segmentos solo si hay suficientes
+            }
         }
     }
     
